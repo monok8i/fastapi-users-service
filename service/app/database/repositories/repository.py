@@ -13,7 +13,7 @@ UpdateSchema = TypeVar("UpdateSchema", bound=BaseModel)
 SpecificationType = TypeVar("SpecificationType", bound=ISpecification)
 
 
-class IRepository(ABC):
+class SQLAlchemyAbstractRepository(ABC):
     """
     Interface for a repository that handles database operations for a specific model.
 
@@ -47,9 +47,11 @@ class IRepository(ABC):
         raise NotImplementedError
 
 
-class Repository(IRepository, Generic[ModelType, CreateSchema, UpdateSchema]):
+class SQLAlchemyAsyncRepository(
+    SQLAlchemyAbstractRepository, Generic[ModelType, CreateSchema, UpdateSchema]
+):
     """
-    This class implements the IRepository interface for a specific model.
+    This class implements the SQLAlchemyAbstractRepository interface for a specific model
 
     Args:
         model (Type[ModelType]): The SQLAlchemy model class that this repository is for.
@@ -84,10 +86,12 @@ class Repository(IRepository, Generic[ModelType, CreateSchema, UpdateSchema]):
         )
 
     @overload
-    async def get_multi(self, *, skip: int, limit: int) -> List[ModelType]: ...
+    async def get_multi(self, *, skip: int, limit: int) -> List[ModelType]:
+        ...
 
     @overload
-    async def get_multi(self, *, skip: None, limit: None) -> List[ModelType]: ...
+    async def get_multi(self, *, skip: None, limit: None) -> List[ModelType]:
+        ...
 
     async def get_multi(
         self,
