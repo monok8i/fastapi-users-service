@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "fastapi-fullstack"
-version = "0.3.0b"
-description = "First backend with using FastAPI framework"
+name = "fastapi-users-service"
+version = "1.0"
+description = "The basic users service is written in FastAPI"
 authors = ["monok8i <didkivskiyyura725@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "fastapi_service" }]
+packages = [{ include = "fastapi-users-service" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
