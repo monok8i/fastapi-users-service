@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
 from typing import Any, Generic, List, Optional, Type, TypeVar, Union, overload
 
 from pydantic import BaseModel
@@ -47,6 +48,7 @@ class SQLAlchemyAbstractRepository(ABC):
         raise NotImplementedError
 
 
+@dataclass
 class SQLAlchemyAsyncRepository(
     SQLAlchemyAbstractRepository, Generic[ModelType, CreateSchema, UpdateSchema]
 ):
@@ -58,9 +60,8 @@ class SQLAlchemyAsyncRepository(
         session (AsyncSession): The SQLAlchemy async session that will be used for database operations.
     """
 
-    def __init__(self, model: Type[ModelType], session: AsyncSession) -> None:
-        self.model = model
-        self._session = session
+    model: ModelType
+    _session: AsyncSession
 
     __slots__ = (
         "model",

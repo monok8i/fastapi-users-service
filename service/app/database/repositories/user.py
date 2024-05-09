@@ -1,4 +1,5 @@
 from typing import Optional, TypeVar  # noqa: I001
+from dataclasses import dataclass
 
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
@@ -12,6 +13,7 @@ from ...utils.specification import ISpecification
 SpecificationType = TypeVar("SpecificationType", bound=ISpecification)
 
 
+@dataclass
 class UserRepository(SQLAlchemyAsyncRepository[User, UserCreate, UserUpdate]):
     async def get_user_refresh_session(
         self, spec: Optional[SpecificationType] = None
@@ -31,6 +33,7 @@ class UserRepository(SQLAlchemyAsyncRepository[User, UserCreate, UserUpdate]):
         )
 
 
+@dataclass
 class RefreshSessionRepository(
     SQLAlchemyAsyncRepository[
         RefreshSession, RefreshSessionCreate, RefreshSessionUpdate

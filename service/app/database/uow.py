@@ -1,4 +1,5 @@
-from abc import ABC, abstractmethod  # noqa: I001
+from abc import ABC, abstractmethod
+from typing import Any  # noqa: I001
 
 from .engine import async_callable_session
 from .repositories import RefreshSessionRepository, UserRepository
@@ -29,7 +30,7 @@ class UnitOfWork(IUnitOfWork):
     async def __aenter__(self):
         self._session = self._call_async_session()
 
-        self.user = UserRepository(model=User, session=self._session)
+        self.user = UserRepository(session=self._session)
         self.refresh_session = RefreshSessionRepository(
             model=RefreshSession, session=self._session
         )
