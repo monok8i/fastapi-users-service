@@ -8,6 +8,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 
+RUN apt update && apt install -y build-essential
+
 RUN python -m pip install poetry
 
 WORKDIR /service/

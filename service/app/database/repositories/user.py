@@ -13,7 +13,7 @@ from ...utils.specification import ISpecification
 SpecificationType = TypeVar("SpecificationType", bound=ISpecification)
 
 
-@dataclass
+@dataclass(kw_only=True)
 class UserRepository(SQLAlchemyAsyncRepository[User, UserCreate, UserUpdate]):
     async def get_user_refresh_session(
         self, spec: Optional[SpecificationType] = None

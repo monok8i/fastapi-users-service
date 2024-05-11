@@ -30,9 +30,9 @@ class UnitOfWork(IUnitOfWork):
     async def __aenter__(self):
         self._session = self._call_async_session()
 
-        self.user = UserRepository(session=self._session)
+        self.user = UserRepository(model=User, _session=self._session)
         self.refresh_session = RefreshSessionRepository(
-            model=RefreshSession, session=self._session
+            model=RefreshSession, _session=self._session
         )
 
     async def __aexit__(self, exc_type, exc_value, traceback):
