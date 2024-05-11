@@ -2,7 +2,7 @@ date = $(shell date)
 
 .PHONY: migration
 migration:
-	alembic revision --autogenerate -m "$(date)"
+	alembic revision --autogenerate -m "Revision ($(date))"
 
 
 .PHONY: migrate
