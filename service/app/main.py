@@ -6,14 +6,16 @@ from .core import settings
 from .core.events import lifespan
 
 
-app = FastAPI(**settings.common.fastapi_kwargs, lifespan=lifespan)
+def main() -> FastAPI:
+    app = FastAPI(**settings.common.fastapi_kwargs, lifespan=lifespan)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.common.BACKEND_CORS_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.common.BACKEND_CORS_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    app.include_router(api_router)
 
-app.include_router(api_router, prefix=settings.common.API_V1)
+    return app

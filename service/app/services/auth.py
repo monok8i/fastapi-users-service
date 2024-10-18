@@ -130,7 +130,7 @@ class AuthenticationService:
 
         async with uow:
             refresh_session = await uow.refresh_session.get(spec=spec)
-
+            
             if not refresh_session:
                 raise InvalidTokenException
 

@@ -11,9 +11,9 @@ class CommonSettings(BaseSettings):
     debug: bool = True
     title: str = "FastAPI backend application"
     version: str = "0.3.0b"
-    openapi_url: str = f"{API_V1}/openapi.json"
-    docs_url: str = f"{API_V1}/docs"
-    redoc_url: str = f"{API_V1}/redoc"
+    openapi_url: str = "/openapi.json"
+    docs_url: str = "/docs"
+    redoc_url: str = "/redoc"
     openapi_prefix: str = ""
 
     @property

@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, AsyncGenerator
 
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import (
@@ -31,7 +31,7 @@ def async_callable_session() -> async_sessionmaker:
     return async_sessionmaker(bind=async_engine(), expire_on_commit=False)
 
 
-async def async_session() -> AsyncSession:
+async def async_session() -> AsyncGenerator[AsyncSession, None]:
     """
     Create an async database session.
 

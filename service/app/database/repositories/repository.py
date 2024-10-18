@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
-from typing import Any, Generic, List, Optional, Type, TypeVar, Union, overload
+from dataclasses import dataclass
+from typing import Any, Generic, List, Optional, TypeVar, Union, overload
 
 from pydantic import BaseModel
 from sqlalchemy import select
@@ -180,7 +180,7 @@ class SQLAlchemyAsyncRepository(
                 if not obj:
                     return None
 
-                model_kwargs = update_schema.dict(exclude_unset=True)
+                model_kwargs = update_schema.model_dump(exclude_unset=True)
                 for key, value in model_kwargs.items():
                     if hasattr(obj, key):
                         setattr(obj, key, value)
