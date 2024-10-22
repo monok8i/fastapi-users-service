@@ -3,7 +3,7 @@ from typing import Any, Optional
 
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-from pydantic import AmqpDsn, PostgresDsn, RedisDsn, field_validator
+from pydantic import PostgresDsn, RedisDsn, field_validator
 from pydantic_core.core_schema import FieldValidationInfo
 from redis.asyncio import ConnectionPool, Redis
 
