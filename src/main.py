@@ -1,14 +1,13 @@
 from fastapi import FastAPI  # noqa: I001
 from fastapi.middleware.cors import CORSMiddleware
 
-from .api import api_router
-from .core import settings
-from .core.events import lifespan
+from api import api_router
+from core import settings
+from core.events import lifespan
 
 
 def main() -> FastAPI:
     app = FastAPI(**settings.common.fastapi_kwargs, lifespan=lifespan)
-
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.common.BACKEND_CORS_ORIGINS,

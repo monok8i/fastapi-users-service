@@ -1,23 +1,24 @@
 from typing import List, Union  # noqa: I001
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi_cache.decorator import cache
+# from fastapi_cache.decorator import cache
 
-from ..dependencies import CurrentUser, UnitOfWorkContext
-from ... import models, schemas
-from ...services import service
+from src.api.dependencies import CurrentUser, UnitOfWorkContext
+from src.api import schemas
+from src.infrastructure.db import models
+from src.infrastructure.db.services import service
 
 router = APIRouter()
 
 
 @router.get("/me", response_model=schemas.User, status_code=status.HTTP_200_OK)
-@cache(expire=60, namespace="me")
+# @cache(expire=60, namespace="me")
 async def get_me(current_user: CurrentUser) -> models.User:
     return current_user
 
 
 @router.get("/{user_id}", response_model=schemas.User, status_code=status.HTTP_200_OK)
-@cache(expire=60, namespace="specific_user")
+# @cache(expire=60, namespace="specific_user")
 async def get_user(
     uow: UnitOfWorkContext, *, user_id: int
 ) -> Union[models.User, HTTPException]:
@@ -25,7 +26,7 @@ async def get_user(
 
 
 @router.get("/", response_model=List[schemas.User], status_code=status.HTTP_200_OK)
-@cache(expire=60, namespace="all_users")
+# @cache(expire=60, namespace="all_users")
 async def get_users(
     uow: UnitOfWorkContext,
     *,

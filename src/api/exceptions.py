@@ -2,7 +2,7 @@ from typing import Optional, TypeVar
 
 from fastapi import HTTPException, status
 
-from .specification import ISpecification
+from utils.specification import ISpecification
 
 SpecificationType = TypeVar("SpecificationType", bound=ISpecification)
 

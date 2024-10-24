@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from ..models import RefreshSession, User
+from infrastructure.db.models import RefreshSession, User
 
 
 class ISpecification(ABC):

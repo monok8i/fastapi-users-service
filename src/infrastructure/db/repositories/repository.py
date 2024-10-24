@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...utils.specification import ISpecification
+from utils.specification import ISpecification
 
 ModelType = TypeVar("ModelType", bound=Any)
 CreateSchema = TypeVar("CreateSchema", bound=BaseModel)
@@ -87,12 +87,10 @@ class SQLAlchemyAsyncRepository(
         )
 
     @overload
-    async def get_multi(self, *, skip: int, limit: int) -> List[ModelType]:
-        ...
+    async def get_multi(self, *, skip: int, limit: int) -> List[ModelType]: ...
 
     @overload
-    async def get_multi(self, *, skip: None, limit: None) -> List[ModelType]:
-        ...
+    async def get_multi(self, *, skip: None, limit: None) -> List[ModelType]: ...
 
     async def get_multi(
         self,

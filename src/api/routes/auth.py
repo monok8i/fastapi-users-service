@@ -3,22 +3,22 @@ from typing import Annotated  # noqa: I001
 from fastapi import APIRouter, Depends, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
 
+from ..exceptions import InvalidTokenException
 from ..dependencies import UnitOfWorkContext
-from ... import schemas
 from ...core import settings as config
-from ...services import service
-from ...utils.exceptions import InvalidTokenException
+from ...infrastructure.db.services import service
+from ..schemas import Token
 
 router = APIRouter()
 
 
-@router.post("/login", response_model=schemas.Token)
+@router.post("/login", response_model=Token)
 async def access_token(
     response: Response,
     uow: UnitOfWorkContext,
     *,
     credentials: Annotated[OAuth2PasswordRequestForm, Depends()],
-) -> schemas.Token:
+) -> Token:
     token = await service.auth.authenticate_user(
         uow, email=credentials.username, password=credentials.password
     )
@@ -33,11 +33,11 @@ async def access_token(
     return token
 
 
-@router.post("/refresh", response_model=schemas.Token)
+@router.post("/refresh", response_model=Token)
 async def refresh_access_token(
     request: Request,
     uow: UnitOfWorkContext,
-) -> schemas.Token:
+) -> Token:
     refresh_token = request.cookies.get("refresh_token")
 
     if not refresh_token:

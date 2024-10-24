@@ -3,15 +3,15 @@ from typing import List
 from fastapi import HTTPException
 from pydantic import EmailStr
 
-from ..core.security import generate_hashed_password
-from ..database.uow import UnitOfWork
-from ..models import User
-from ..schemas import UserCreate, UserUpdate
-from ..utils.exceptions import (
+from src.core.security import generate_hashed_password
+from src.infrastructure.db.uow import UnitOfWork
+from src.infrastructure.db.models import User
+from src.api.schemas import UserCreate, UserUpdate
+from src.api.exceptions import (
     UserAlreadyExistsException,
     UserNotFoundException,
 )
-from ..utils.specification import UserEmailSpecification, UserIDSpecification
+from src.utils.specification import UserEmailSpecification, UserIDSpecification
 
 
 class UserService:

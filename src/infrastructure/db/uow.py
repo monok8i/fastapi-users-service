@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Any  # noqa: I001
 
 from .engine import async_callable_session
 from .repositories import RefreshSessionRepository, UserRepository
-from ..models import RefreshSession, User
+from .models import RefreshSession, User
 
 
 class IUnitOfWork(ABC):

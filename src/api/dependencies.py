@@ -4,12 +4,14 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
-from ..core import settings as config
-from ..database.uow import UnitOfWork
-from ..models import User
-from ..schemas.token import TokenPayload
-from ..services import service
-from ..utils.exceptions import InvalidTokenException
+from core import settings as config
+from infrastructure.db.uow import UnitOfWork
+from infrastructure.db.models import User
+from infrastructure.db.services import service
+from schemas.token import TokenPayload
+
+from .exceptions import InvalidTokenException
+
 
 # unit of work context
 UnitOfWorkContext = Annotated[UnitOfWork, Depends(UnitOfWork)]

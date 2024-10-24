@@ -2,25 +2,26 @@ import secrets  # noqa: I001
 from datetime import datetime, timedelta
 from typing import Any, Union
 
-import jwt
+# import jwt
 from fastapi import HTTPException
-from passlib.context import CryptContext
+
+# from passlib.context import CryptContext
 from pydantic import EmailStr
 
 from .user import UserService
-from ..core import settings as config
-from ..core.security import verify_password
-from ..database.uow import UnitOfWork
+from core import settings as config
+from core.security import verify_password
+from ..uow import UnitOfWork
 from ..models import RefreshSession
-from ..schemas import RefreshSessionCreate, Token
-from ..utils.exceptions import (
+from api.schemas import RefreshSessionCreate, Token
+from api.exceptions import (
     InvalidCredentialsException,
     InvalidTokenException,
     TokenExpiredException,
 )
-from ..utils.specification import RefreshTokenSpecification, UserIDSpecification
+from utils.specification import RefreshTokenSpecification, UserIDSpecification
 
-hash_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# hash_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class AuthenticationService:
@@ -58,7 +59,7 @@ class AuthenticationService:
             "exp": expire,
         }
 
-        return jwt.encode(payload, private_key, algorithm)
+        # return jwt.encode(payload, private_key, algorithm)
 
     @classmethod
     def decode_jwt_token(
@@ -78,7 +79,7 @@ class AuthenticationService:
         Returns:
             Any: The decoded payload of the JWT token.
         """
-        return jwt.decode(token, public_key, algorithms=[algorithm])
+        # return jwt.decode(token, public_key, algorithms=[algorithm])
 
     @classmethod
     def _generate_refresh_token(cls, lenght: int = 64) -> str:
@@ -130,7 +131,7 @@ class AuthenticationService:
 
         async with uow:
             refresh_session = await uow.refresh_session.get(spec=spec)
-            
+
             if not refresh_session:
                 raise InvalidTokenException
 

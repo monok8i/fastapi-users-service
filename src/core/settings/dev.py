@@ -1,11 +1,11 @@
 from pathlib import Path
 from typing import Any, Optional
 
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
-from pydantic import PostgresDsn, RedisDsn, field_validator
+# from fastapi_cache import FastAPICache
+# from fastapi_cache.backends.redis import RedisBackend
+from pydantic import PostgresDsn, field_validator
 from pydantic_core.core_schema import FieldValidationInfo
-from redis.asyncio import ConnectionPool, Redis
+# from redis.asyncio import ConnectionPool, Redis
 
 from .base import CommonSettings
 from .env_type import CurrentEnvType
@@ -49,35 +49,35 @@ class Authentication(CurrentEnvType):
     ALGORITHM: str = "RS256"
 
 
-class RedisCache(CurrentEnvType):
-    REDIS_USER: Optional[str] = "default"
-    REDIS_PASSWORD: str
-    REDIS_HOST: str
-    REDIS_PORT: int
-    REDIS_URI: Optional[str] = None
+# class RedisCache(CurrentEnvType):
+#     REDIS_USER: Optional[str] = "default"
+#     REDIS_PASSWORD: str
+#     REDIS_HOST: str
+#     REDIS_PORT: int
+#     REDIS_URI: Optional[str] = None
 
-    @field_validator("REDIS_URI", mode="before")
-    def assemble_db_connection(
-        cls,  # noqa: N805
-        v: Optional[str],
-        info: FieldValidationInfo,
-    ) -> Any:
-        if isinstance(v, str):
-            return v
-        return str(
-            RedisDsn.build(
-                scheme="redis",
-                username=info.data.get("REDIS_USER"),
-                password=info.data.get("REDIS_PASSWORD"),
-                host=info.data.get("REDIS_HOST"),
-                port=info.data.get("REDIS_PORT"),
-            )
-        )
+#     @field_validator("REDIS_URI", mode="before")
+#     def assemble_db_connection(
+#         cls,  # noqa: N805
+#         v: Optional[str],
+#         info: FieldValidationInfo,
+#     ) -> Any:
+#         if isinstance(v, str):
+#             return v
+#         return str(
+#             RedisDsn.build(
+#                 scheme="redis",
+#                 username=info.data.get("REDIS_USER"),
+#                 password=info.data.get("REDIS_PASSWORD"),
+#                 host=info.data.get("REDIS_HOST"),
+#                 port=info.data.get("REDIS_PORT"),
+#             )
+#         )
 
-    async def setup_cache(self) -> None:
-        pool = ConnectionPool.from_url(url=self.REDIS_URI)
-        redis = Redis(connection_pool=pool)
-        FastAPICache.init(RedisBackend(redis=redis), prefix="redis_cache")
+#     async def setup_cache(self) -> None:
+#         pool = ConnectionPool.from_url(url=self.REDIS_URI)
+#         redis = Redis(connection_pool=pool)
+#         FastAPICache.init(RedisBackend(redis=redis), prefix="redis_cache")
 
 
 class DevSettings(CurrentEnvType):
@@ -89,9 +89,9 @@ class DevSettings(CurrentEnvType):
     def database(self) -> Database:
         return Database()
 
-    @property
-    def redis_cache(self) -> RedisCache:
-        return RedisCache()
+    # @property
+    # def redis_cache(self) -> RedisCache:
+    #     return RedisCache()
 
     @property
     def auth(self) -> Authentication:

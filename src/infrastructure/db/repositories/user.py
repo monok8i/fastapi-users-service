@@ -5,10 +5,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
 from .repository import SQLAlchemyAsyncRepository  # noqa: I001
-from ...models import RefreshSession, User
-from ...schemas.token import RefreshSessionCreate, RefreshSessionUpdate
-from ...schemas.user import UserCreate, UserUpdate
-from ...utils.specification import ISpecification
+from ..models import RefreshSession, User
+from api.schemas.token import RefreshSessionCreate, RefreshSessionUpdate
+from api.schemas.user import UserCreate, UserUpdate
+from utils.specification import ISpecification
 
 SpecificationType = TypeVar("SpecificationType", bound=ISpecification)
 
